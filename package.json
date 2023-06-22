@@ -2,11 +2,13 @@
   "name": "new",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/app.js",
-    "start": "node ./src/app.js"
+    "client": "cd client && npm start",
+    "server": "nodemon ./src/server.js",
+    "start": "node ./src/server.js",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -21,5 +23,8 @@
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-discord": "^0.1.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
   }
 }

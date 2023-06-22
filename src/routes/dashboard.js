@@ -11,7 +11,7 @@ function isAuthorized (req, res, next) {
 }
 
 router.get('/', isAuthorized, (req, res) => {
-    res.render('dashboard', {
+    res.json({
         username: req.user.username,
         discordId : req.user.discordId,
         guilds: req.user.guilds

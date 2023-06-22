@@ -4,7 +4,7 @@ const passport = require('passport');
 router.get('/', passport.authenticate('discord'));
 router.get('/redirect', passport.authenticate('discord', {
     failureRedirect: '/forbidden',
-    successRedirect: '/dashboard'
+    successRedirect: 'http://localhost:3000/dashboard'
 }));
 
 router.get('/logout', (req, res) => {
@@ -17,6 +17,12 @@ router.get('/logout', (req, res) => {
     });
 });
 
-
+router.get('/user', (req, res) => {
+    if(req.user){
+        res.json({ user: req.user });  // Send user data when logged in
+    } else {
+        res.json({ user: null });  // Send null if user is not logged in
+    }
+});
 
 module.exports = router;

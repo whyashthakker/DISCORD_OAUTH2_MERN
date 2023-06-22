@@ -27,37 +27,21 @@ app.use(session({
     }),
 }));
 
-
-function isAuthorized (req, res, next) {
-    if (req.user) {
-        console.log('User is logged in.');
-        res.redirect('/dashboard');
-
-    } else {
-        console.log('User is not logged in.');
-        next();
-    }
-}
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Middleware
 app.use('/auth', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 
-app.get('/', isAuthorized, (req, res) => {
-    res.render('home', {
-        user: req.user
-    });
-});
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });  
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
-    }
-);
+});
